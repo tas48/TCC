@@ -38,25 +38,28 @@ const Signup = () => {
         <Image src="../public/logo.png" alt="Logo" width="100" height="auto" mb={10} objectFit="contain" />
         <Heading size="lg" textAlign="center">Cadastro</Heading>
 
-        {/*alterar aqui o zod para verificar mais um campo e incluir para enviar pro backend  */}
-        <FormControl isInvalid={!!errors.email} width="100%"> 
-          <Input placeholder="Nome de Usuário" {...register("email")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.email?.message}</FormErrorMessage>
+        {/* Campo Nome de Usuário */}
+        <FormControl isInvalid={!!errors.username} width="100%">
+          <Input placeholder="Nome de Usuário" {...register("username")} bg="gray.700" color="white" borderRadius="lg" />
+          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.username?.message}</FormErrorMessage>
         </FormControl>
-        
+
+        {/* Campo E-mail */}
         <FormControl isInvalid={!!errors.email} width="100%"> 
           <Input placeholder="E-mail" {...register("email")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.email?.message}</FormErrorMessage>
+          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.email?.message}</FormErrorMessage>
         </FormControl>
 
+        {/* Campo Senha */}
         <FormControl isInvalid={!!errors.password} width="100%">
           <Input type="password" placeholder="Senha" {...register("password")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.password?.message}</FormErrorMessage>
+          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.password?.message}</FormErrorMessage>
         </FormControl>
 
+        {/* Campo Confirmar Senha */}
         <FormControl isInvalid={!!errors.confirmPassword} width="100%">
           <Input type="password" placeholder="Confirmar Senha" {...register("confirmPassword")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.confirmPassword?.message}</FormErrorMessage>
+          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.confirmPassword?.message}</FormErrorMessage>
         </FormControl>
 
         <Button type="submit" bg="whiteAlpha.800" width="60%">

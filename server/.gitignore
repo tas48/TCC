@@ -1,0 +1,25 @@
+# Arquivos do ambiente virtual
+venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.swp
+
+# Dependências
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Configurações do editor
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs e arquivos temporários
+logs/
+*.log
+*.tmp
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

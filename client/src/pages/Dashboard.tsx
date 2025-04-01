@@ -1,20 +1,28 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
+//import { useEffect } from "react";
+//import { useNavigate } from "react-router-dom";
+import MainSidebar from "../components/layouts/Sidebar";
+import MainHeader from "../components/layouts/MainHeader";
+//import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
-  const navigate = useNavigate(); 
+  //const navigate = useNavigate();
+  // const { user } = useAuth();
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  // }, [user, navigate]);
+
+  // if (!user) {
+  //   return null;
+  // }
 
   return (
-    <Box color="white" minH="100vh" display="flex" justifyContent="center" alignItems="center">
-      <Heading>Bem-vindo ao Dashboard</Heading>
-      <Link 
-        color="gray.400" 
-        onClick={() => navigate("/signup")} 
-        cursor="pointer" 
-        _hover={{ color: "gray.300" }}
-      >
-        Ir para Cadastro
-      </Link>
+    <Box minH="100vh" minW={"100vw"}>
+      <MainHeader />
+      <MainSidebar />
     </Box>
   );
 };

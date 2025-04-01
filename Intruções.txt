@@ -1,4 +1,3 @@
-Backend Django + DRF
 
 1. Primeiro vá para a pasta server, no terminal digite:
 -> cd server
@@ -11,10 +10,10 @@ Backend Django + DRF
 (linux/mac) -> source venv/bin/activate
 
 4. Após, basta instalar as dependencias do projeto
--> pip install requirements.txt
+-> pip install req.txt
 
 5. Rodar o projeto
--> python manage.py runserver
+-> fastapi dev main.py
 
 Frontend
 1. Primeiro vá para a pasta client, no terminal digite:

@@ -40,12 +40,12 @@ const Login = () => {
 
         <FormControl isInvalid={!!errors.email} width="100%"> 
           <Input placeholder="E-mail" {...register("email")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.email?.message}</FormErrorMessage>
+          <FormErrorMessage color={"crimson"} fontSize="13px">{errors.email?.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={!!errors.password} width="100%">
           <Input type="password" placeholder="Senha" {...register("password")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"}>{errors.password?.message}</FormErrorMessage>
+          <FormErrorMessage color={"crimson"} fontSize="13px">{errors.password?.message}</FormErrorMessage>
         </FormControl>
 
         <Button type="submit" bg="whiteAlpha.800" width="60%">
@@ -53,6 +53,9 @@ const Login = () => {
         </Button>
         <Link color="gray.400" onClick={() => navigate("/cadastro")} cursor="pointer" _hover={{ color: "gray.300" }}>
           Não tem conta? Cadastre-se
+        </Link>
+        <Link color="green.400" onClick={() => navigate("/dashboard")} cursor="pointer" _hover={{ color: "gray.300" }}>
+          ir pro dashboard TESTE[dev mode]
         </Link>
       </VStack>
     </Box>

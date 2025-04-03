@@ -12,8 +12,14 @@
 4. Após, basta instalar as dependencias do projeto
 -> pip install req.txt
 
+5. Rode o comando para criar o banco de dados sqlite, 
+ele ira inserir um usuario de teste email="teste@gmail.com", password="P@ssword1"
+-> python migrate.py
+
 5. Rodar o projeto
 -> fastapi dev main.py
+
+____________________________________________________
 
 Frontend
 1. Primeiro vá para a pasta client, no terminal digite:

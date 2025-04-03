@@ -17,7 +17,7 @@ const Signup = () => {
 
   const onSubmit = async (data: SignFormData) => {
     try {
-      await registerUser(data.email, data.password);
+      await registerUser(data.username, data.email, data.password);
       alert("Cadastro realizado! Agora você pode fazer login.");
       navigate("/login");
     } catch (error) {

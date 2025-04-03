@@ -1,5 +1,6 @@
-const urlRegister = "http://127.0.0.1:8000/register"
-const urlLogin = "http://127.0.0.1:8000/login"
+const urlRegister = "http://127.0.0.1:8000/auth/register";
+const urlLogin = "http://127.0.0.1:8000/auth/login";
+
 import { createContext, useState, useContext, ReactNode } from "react";
 import axios from "axios";
 
@@ -11,7 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string) => Promise<void>;
+  register: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -29,9 +30,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (username: string, email: string, password: string) => {
     try {
-      await axios.post(urlRegister, { email, password });
+      await axios.post(urlRegister, { username, email, password });
       await login(email, password);
       alert("Cadastro realizado! Logado automaticamente.");
     } catch (error: any) {

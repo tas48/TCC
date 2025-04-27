@@ -18,9 +18,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}  # Vai pegar do arquivo .env
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Vai pegar do arquivo .env
-      POSTGRES_DB: vulnera  # Nome do banco de dados que será criado
+      POSTGRES_DB: ${POSTGRES_DB}  # Nome do banco de dados que será criado
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432" #porta do host mapeada para a porta interna do container(evita conflitos)
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persistência de dados do PostgreSQL
     networks:

@@ -1,24 +1,17 @@
 from sqlalchemy.orm import Session
 import jwt
 import datetime
-from database.conn import SECRET_KEY
 from models.user import User
 from pydantic import BaseModel
+from schemas.user import UserCreate, UserLogin
 from fastapi import HTTPException
 from services.utils.hash_password import hash_password, verify_password  
+from dotenv import load_dotenv
+import os
+from services.utils.jwt import create_token
 
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
-    
-class UserLogin(BaseModel):  
-    email: str  
-    password: str 
-
-def create_token(email: str) -> str:
-    payload = {"email": email, "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)}
-    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 def register_user(user: UserCreate, db: Session):
     if db.query(User).filter(User.email == user.email).first():

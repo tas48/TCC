@@ -1,24 +1,28 @@
 services:
   metasploit:
-    image: parrotsec/metasploit:latest
+    image: metasploitframework/metasploit-framework:latest
     container_name: metasploit
     stdin_open: true
     tty: true
-    volumes:
-      - msf-db:/var/lib/postgresql # persisten o banco de dados do Metasploit
-    command: tail -f /dev/null  # Isso mantém o container rodando esperando comandos.
+    command: tail -f /dev/null  # Só segura o container rodando
     ports:
       - "4444:4444"
+    networks:
+      - app-network
+    volumes:
+      - msf-db:/var/lib/postgresql/data  # Persistência do banco de dados do Metasploit
 
   postgres:
     image: postgres
     container_name: postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: ${POSTGRES_USER}  # Vai pegar do arquivo .env
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Vai pegar do arquivo .env
+      POSTGRES_DB: vulnera  # Nome do banco de dados que será criado
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistência de dados do PostgreSQL
     networks:
       - app-network
 
@@ -27,7 +31,7 @@ services:
     container_name: rabbitmq
     ports:
       - "5672:5672"
-      - "15672:15672"
+      - "15672:15672"  # Interface de gestão do RabbitMQ
     networks:
       - app-network
 
@@ -57,33 +61,27 @@ services:
     entrypoint: ["tail", "-f", "/dev/null"]  # Isso mantém o container rodando esperando comandos.
     networks:
       - app-network
-  
-  mitmproxy:
-    image: mitmproxy/mitmproxy:latest
-    container_name: mitmproxy
-    stdin_open: true
-    tty: true
-    command: mitmproxy
-    ports:
-      - "8080:8080"  # Porta HTTP proxy
-      - "8081:8081"  # Porta Web interface (se você quiser usar a interface web)
-    volumes:
-      - ~/.mitmproxy:/home/mitmproxy/.mitmproxy  # Volumes para persistir certificados e configurações
-    networks:
-      - app-network
-    restart: unless-stopped  # Opcional: Manter o container reiniciando em caso de falha, mas sem iniciar automaticamente
 
-  wappalyzer:
-    image: ruanzx/wappalyzer
-    container_name: wappalyzer
-    command: /bin/bash -c "while true; do sleep 3600; done"  # Mantém o container rodando indefinidamente
-    volumes:
-      - ./output:/app/output  # Opcional, caso queira salvar os resultados em um diretório local
-    restart: always
+  # mitmproxy (comentado por enquanto, remova o comentário se quiser usar)
+  # mitmproxy:
+  #   image: mitmproxy/mitmproxy:latest
+  #   container_name: mitmproxy
+  #   stdin_open: true
+  #   tty: true
+  #   command: mitmproxy
+  #   ports:
+  #     - "8080:8080"  # Porta HTTP proxy
+  #     - "8081:8081"  # Porta Web interface (se você quiser usar a interface web)
+  #   volumes:
+  #     - ~/.mitmproxy:/home/mitmproxy/.mitmproxy  # Volumes para persistir certificados e configurações
+  #   networks:
+  #     - app-network
+  #   restart: unless-stopped  # Opcional: Manter o container reiniciando em caso de falha
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
-  msf-db:
+  postgres_data:  # Persistência do banco de dados do PostgreSQL
+  msf-db:        # Persistência do banco de dados do Metasploit

@@ -31,3 +31,13 @@ Link pra baixar: https://nodejs.org/pt
 
 3. Rodar o projeto Frontend
 -> npm run dev
+
+
+--- docker
+
+1. na raiz do projeto /TCC, Rode o comando abaixo para criar e subir os containers
+-> docker compose up -d
+
+* para testar o banco de dados, rode 
+-> docker exec -it postgres psql -U {usuario_definido_no_.env -d vulnera} -c "SELECT version();"
+Se aparecer a versão 17.4, está ok

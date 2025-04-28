@@ -59,8 +59,8 @@ services:
     stdin_open: true
     tty: true
     entrypoint: ["tail", "-f", "/dev/null"]  # Isso mantém o container rodando esperando comandos.
-    networks:
-      - app-network
+    ports:
+      - "8080:8080"  # Porta para o serviço web do Dalfox (se necessário)
 
   # mitmproxy (comentado por enquanto, remova o comentário se quiser usar)
   # mitmproxy:

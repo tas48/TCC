@@ -46,9 +46,21 @@ def format_response(status: str, message: str, data: Optional[Dict[str, Any]] = 
     Retorna:
     - dict: Resposta padronizada no formato JSON.
     """
+    if data and "output" in data:
+        data["output"] = remove_ansi_escape_codes(data["output"])
+
     return {
         "status": status,
         "message": message,
         "error_code": error_code if error_code is not None else None,
         "data": data if data is not None else {}
     }
+
+def remove_ansi_escape_codes(text: str) -> str:
+    """
+    Remove códigos de escape ANSI (como os de formatação de cor) de uma string.
+    :param text: String com códigos de escape ANSI.
+    :return: String limpa sem os códigos de escape.
+    """
+    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+    return ansi_escape.sub('', text)

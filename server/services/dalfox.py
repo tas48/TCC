@@ -14,12 +14,8 @@ class Dalfox:
         if not response["success"]:
             return format_response("error", f"Erro ao rodar Dalfox: {response.get('error', 'Erro desconhecido')}", error_code=500)
 
-        output = response["output"]
+        return format_response("success", "Scan concluído", data={"output": response["output"]})
 
-        if "VULN" in output.upper():
-            return format_response("warning", "XSS detectado!", data={"output": output})
-        else:
-            return format_response("success", "Nenhum XSS detectado.", data={"output": output})
 
     @staticmethod
     def bypass_waf(target):

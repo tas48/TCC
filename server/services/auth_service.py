@@ -11,7 +11,7 @@ import os
 from services.utils.jwt import create_token
 
 load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 def register_user(user: UserCreate, db: Session):
     if db.query(User).filter(User.email == user.email).first():

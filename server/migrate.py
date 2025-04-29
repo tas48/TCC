@@ -1,14 +1,15 @@
 from database.conn import engine, SessionLocal, Base
 from models.user import User
+from services.utils.hash_password import hash_password  # Adicione isso
 
 def migrate():
     print("Criando banco de dados...")
-    Base.metadata.create_all(bind=engine) # Criação das tabelas, se não existirem
+    Base.metadata.create_all(bind=engine)
     print("Tabelas criadas com sucesso!")
-
-    # Criando um usuário de teste
+    
     with SessionLocal() as db:
-        user = User(name="teste", email="teste@gmail.com", password="P@ssword1")
+        hashed_pw = hash_password("P@ssword1")
+        user = User(name="teste", email="teste@gmail.com", password=hashed_pw)
         db.add(user)
         db.commit()
         print("[+] Usuário teste inserido com sucesso!")

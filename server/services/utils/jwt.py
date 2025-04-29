@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 def create_token(email: str) -> str:
     payload = {
@@ -20,4 +20,4 @@ def verify_token(token: str) -> dict:
     except jwt.ExpiredSignatureError:
         raise ValueError("Token expirado")
     except jwt.InvalidTokenError:
-        raise ValueError("Token inválido")
+        raise ValueError("To    ken inválido")

@@ -18,11 +18,13 @@ const Login = () => {
 
   const onSubmit = async (data: AuthFormData) => {
     try {
-      await login(data.email, data.password);
-      navigate("/dashboard"); 
+      const success = await login(data.email, data.password);
+      if (success) {
+        navigate("/dashboard");
+      }
     } catch (error) {
       alert("Erro ao fazer login");
-    }
+    }    
   };
 
   return (

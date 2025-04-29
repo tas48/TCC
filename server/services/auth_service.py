@@ -26,7 +26,7 @@ def register_user(user: UserCreate, db: Session):
 
 def login_user(user: UserLogin, db: Session):
     db_user = db.query(User).filter(User.email == user.email).first()
-    if not db_user or not verify_password(user.password, db_user.password):  # 🔑 Verificando hash
+    if not db_user or not verify_password(user.password, db_user.password): 
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
     return {"token": create_token(user.email)}

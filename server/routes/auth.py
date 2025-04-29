@@ -18,14 +18,14 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 def login(user: UserLogin, db: Session = Depends(get_db)):
     return login_user(user, db)
 
-@router.get("/users")
-def get_all_users(db: Session = Depends(get_db)):
-    users = db.query(User).all()  # Consulta todos os usuários
-    return users
-
 @router.get("/users/{id}")
 def get_user_by_id(id: int, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == id).first()  # Consulta um usuário pelo ID
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")  # Se não encontrar o usuário, retorna erro 404
     return user
+
+@router.get("/verify-token")
+def verify_token(token: str = Depends(get_current_user)):
+    return {"email": user["email"]}
+

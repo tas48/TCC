@@ -1,11 +1,25 @@
-import { Box, Text, VStack, Image, HStack} from "@chakra-ui/react";
+import { Box, Text, VStack, Image, HStack } from "@chakra-ui/react";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { FaRegClock } from "react-icons/fa";
 import { GrConfigure } from "react-icons/gr";
 import { GrDocumentConfig } from "react-icons/gr";
 import { MdOutlineCreate } from "react-icons/md";
+import { FiTerminal } from "react-icons/fi";
 
-const MainSidebar = () => { 
+const sidebarItems = [
+  { icon: <HiOutlineDocumentReport />, label: "Relatórios" },
+  { icon: <FaRegClock />, label: "Agendamento" },
+  { icon: <GrDocumentConfig />, label: "PreMande Scans" },
+  { icon: <GrConfigure />, label: "Nmap" },
+  { icon: <GrConfigure />, label: "SqlMap" },
+  { icon: <GrConfigure />, label: "MitmProxy" },
+  { icon: <GrConfigure />, label: "Dalfox" },
+  { icon: <GrConfigure />, label: "Metasploit"},
+  { icon: <MdOutlineCreate />, label: "Scan Personalizado" },
+  { icon: <FiTerminal />, label: "Terminal"}
+];
+
+const MainSidebar = () => {
   return (
     <Box
       w="250px"
@@ -17,48 +31,39 @@ const MainSidebar = () => {
       left={0}
       top={0}
     >
-    <Image 
-      src="../public/logo.png" 
-      alt="Logo" 
-      width="18" 
-      height="8" 
-      mb={8}
-      align={"center"} 
-      objectFit="contain" />
-   
-      <VStack align="start" mt={5} spaceY="2">
-        <HStack>
-          <HiOutlineDocumentReport />
-          <Text>Relatórios</Text>
-        </HStack>
-        <HStack>
-          <FaRegClock />
-          <Text>Agendamento</Text>
-        </HStack>
-        <HStack>
-          <GrDocumentConfig />
-          <Text>PreMande Scans</Text>
-        </HStack>
-        <HStack>
-          <GrConfigure />
-          <Text>Nmap</Text>
-        </HStack>
-        <HStack>
-          <GrConfigure />
-          <Text>SqlMap</Text>
-        </HStack>
-        <HStack>
-          <GrConfigure />
-          <Text>MitmProxy</Text>
-        </HStack>
-        <HStack>
-          <GrConfigure />
-          <Text>Dalfox</Text>
-        </HStack>
-        <HStack>
-          <MdOutlineCreate />
-          <Text>Scan Personalizado</Text>
-        </HStack>
+      <Image
+        src="../public/logo.png"
+        alt=" Logo"
+        width="18"
+        height="8"
+        marginStart={3}
+        mb={8}
+        align={"center"}
+        objectFit="contain"
+      />
+
+      <VStack align="start" mt={1} w="100%">
+        {sidebarItems.map((item, idx) => (
+          <HStack
+            key={idx}
+            w="100%"
+            px={3}
+            py={2}
+            borderRadius="md"
+            transition="all 0.2s"
+            cursor="pointer"
+          >
+            {item.icon}
+            <Text
+              transition="all 0.2s"
+              _hover={{
+                color: "gray.300",
+              }}
+            >
+              {item.label}
+            </Text>
+          </HStack>
+        ))}
       </VStack>
     </Box>
   );

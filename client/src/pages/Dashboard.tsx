@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <Box minH="100vh" minW={"100vw"}>
-      <MainHeader />
+      <MainHeader />  
       <MainSidebar />
     </Box>
   );

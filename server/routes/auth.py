@@ -25,7 +25,4 @@ def get_user_by_id(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Usuário não encontrado")  # Se não encontrar o usuário, retorna erro 404
     return user
 
-@router.get("/verify-token")
-def verify_token(token: str = Depends(get_current_user)):
-    return {"email": user["email"]}
 

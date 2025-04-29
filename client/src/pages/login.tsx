@@ -24,7 +24,8 @@ const Login = () => {
       }
     } catch (error) {
       alert("Erro ao fazer login");
-    }    
+    }
+    
   };
 
   return (

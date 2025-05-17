@@ -1,6 +1,7 @@
-import { Box, Heading, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const ErrorPage = () => {
   const { user } = useAuth(); 
@@ -15,20 +16,21 @@ const ErrorPage = () => {
   };
 
   return (
-    <Box color="white" height="50vh" width="40vw" display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-      <Heading>Erro, a página solicitada não foi encontrada, 
-        clique no botão abaixo para retornar a segurança.
-      </Heading>
-      <Button 
-        mt={4} 
-        onClick={handleRedirect} 
-        bg="whiteAlpha.800" 
-        color="gray.800" 
-        _hover={{ bg: ".400" }}
-      >
-        Ir para a {user ? "Dashboard" : "Tela de Login"}
-      </Button>
-    </Box>
+    <Card className="w-[40vw] h-[50vh] flex justify-center items-center">
+      <CardContent className="flex flex-col items-center justify-center text-center p-6">
+        <h1 className="text-2xl font-bold mb-4">
+          Erro, a página solicitada não foi encontrada, 
+          clique no botão abaixo para retornar a segurança.
+        </h1>
+        <Button 
+          onClick={handleRedirect}
+          variant="default"
+          className="mt-4"
+        >
+          Ir para a {user ? "Dashboard" : "Tela de Login"}
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -1,10 +1,12 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Profile = () => {
   return (
-    <Box bg="indigo.100" p={4} borderRadius="md" h="100%">
-      <Heading size="lg">Perfil do Usuário</Heading>
-    </Box>
+    <Card className="h-full bg-indigo-100">
+      <CardContent className="p-4">
+        <h1 className="text-2xl font-bold">Perfil do Usuário</h1>
+      </CardContent>
+    </Card>
   );
 };
 

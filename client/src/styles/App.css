@@ -1,4 +1,74 @@
 @import "tailwindcss";
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.23 0.0057 285.95);
+  --foreground: oklch(0.9 0.0013 286.37);
+  --card: oklch(0.26 0.0074 285.87);
+  --card-foreground: oklch(0.95 0.002 285.823);
+  --popover: oklch(0.20 0.004 285.885);
+  --popover-foreground: oklch(0.95 0.002 285.823);
+  --primary: oklch(0.85 0.002 286.32);
+  --primary-foreground: oklch(0.25 0.003 285.823);
+  --secondary: oklch(0.25 0.003 286.033);
+  --secondary-foreground: oklch(0.95 0.002 285.823);
+  --muted: oklch(0.25 0.003 286.033);
+  --muted-foreground: oklch(0.75 0.008 286.067);
+  --accent: oklch(0.25 0.003 286.033);
+  --accent-foreground: oklch(0.95 0.002 285.823);
+  --destructive: oklch(0.75 0.12 22.216);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.65 0.008 285.938);
+  --chart-1: oklch(0.55 0.15 264.376);
+  --chart-2: oklch(0.75 0.10 162.48);
+  --chart-3: oklch(0.80 0.12 70.08);
+  --chart-4: oklch(0.70 0.18 303.9);
+  --chart-5: oklch(0.70 0.15 16.439);
+  --sidebar: oklch(0.20 0.004 285.885);
+  --sidebar-foreground: oklch(0.95 0.002 285.823);
+  --sidebar-primary: oklch(0.55 0.15 264.376);
+  --sidebar-primary-foreground: oklch(0.95 0.002 285.823);
+  --sidebar-accent: oklch(0.28 0.0055 286.04);
+  --sidebar-accent-foreground: oklch(0.95 0.002 285.823);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.65 0.008 285.938);
+
+}
+
+.light {
+  --radius: 0.75rem;
+  --background: oklch(0.93 0 none);
+  --foreground: oklch(0.25 0.003 285.823);
+  --card: oklch(0.98 0.002 285.823);
+  --card-foreground: oklch(0.25 0.003 285.823);
+  --popover: oklch(0.98 0.002 285.823);
+  --popover-foreground: oklch(0.25 0.003 285.823);
+  --primary: oklch(0.35 0.004 285.885);
+  --primary-foreground: oklch(0.98 0.002 285.823);
+  --secondary: oklch(0.95 0.001 286.375);
+  --secondary-foreground: oklch(0.35 0.004 285.885);
+  --muted: oklch(0.95 0.001 286.375);
+  --muted-foreground: oklch(0.65 0.008 285.938);
+  --accent: oklch(0.95 0.001 286.375);
+  --accent-foreground: oklch(0.35 0.004 285.885);
+  --destructive: oklch(0.65 0.15 27.325);
+  --border: oklch(0.90 0.002 286.32);
+  --input: oklch(0.90 0.002 286.32);
+  --ring: oklch(0.75 0.008 286.067);
+  --chart-1: oklch(0.70 0.15 41.116);
+  --chart-2: oklch(0.65 0.08 184.704);
+  --chart-3: oklch(0.45 0.05 227.392);
+  --chart-4: oklch(0.85 0.12 84.429);
+  --chart-5: oklch(0.80 0.12 70.08);
+  --sidebar: oklch(0.98 0.002 285.823);
+  --sidebar-foreground: oklch(0.25 0.003 285.823);
+  --sidebar-primary: oklch(0.35 0.004 285.885);
+  --sidebar-primary-foreground: oklch(0.98 0.002 285.823);
+  --sidebar-accent: oklch(0.95 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.35 0.004 285.885);
+  --sidebar-border: oklch(0.90 0.002 286.32);
+  --sidebar-ring: oklch(0.75 0.008 286.067);
+}
 
 #root {
   width: 100vw;
@@ -15,8 +85,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--foreground);
+  background-color: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,11 +96,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--primary-foreground);
 }
 
 body {
@@ -39,41 +109,46 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: var(--foreground);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--background);
+  color: var(--foreground);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--primary);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--foreground);
+    background-color: var(--background);
   }
   a:hover {
-    color: #747bff;
+    color: var(--primary-foreground);
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--background);
   }
 }

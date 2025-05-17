@@ -1,10 +1,10 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { CenterBox } from "@/components/ui/CenterBox";
 
 const SqlMap = () => {
   return (
-    <Box bg="red.100" p={4} borderRadius="md" h="100%">
-      <Heading size="lg">SqlMap</Heading>
-    </Box>
+    <CenterBox>
+      <span className="text-2xl font-bold text-white">SqlMap</span>
+    </CenterBox>
   );
 };
 

@@ -1,10 +1,6 @@
-import { Box } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MainSidebar from "../components/layouts/Sidebar";
 import MainHeader from "../components/layouts/MainHeader";
-import CenterBox from "../components/CenterBox";
-import { useAuth } from "../context/AuthContext";
+import { CenterBox } from "../components/ui/CenterBox";
 import Reports from "../components/layouts/Reports";
 import Scheduling from "../components/layouts/Scheduling";
 import PreMandeScans from "../components/layouts/PreMandeScans";
@@ -16,12 +12,12 @@ import Metasploit from "../components/layouts/Metasploit";
 import CustomScan from "../components/layouts/CustomScan";
 import Terminal from "../components/layouts/Terminal";
 import Profile from "../components/layouts/Profile";
+import Config from "../components/layouts/Config";
+import { useState } from "react";
 
 const Dashboard = () => {
-  
   const [selectedContent, setSelectedContent] = useState("Relatórios");
 
-  
   const renderContent = () => {
     switch (selectedContent) {
       case "Relatórios":
@@ -46,19 +42,21 @@ const Dashboard = () => {
         return <Terminal />;
       case "Profile":
         return <Profile />;
+      case "Config":
+        return <Config />;
       default:
         return <Reports />;
     }
   };
 
   return (
-    <Box h="100dvh" w="100vw" overflow="hidden">
+    <div className="h-[100dvh] w-[100vw] overflow-hidden">
       <MainHeader onSelectContent={setSelectedContent} />
       <MainSidebar onSelectContent={setSelectedContent} />
-      <CenterBox p={6}>
+      <CenterBox className="p-6">
         {renderContent()}
       </CenterBox>
-    </Box>
+    </div>
   );
 };
 

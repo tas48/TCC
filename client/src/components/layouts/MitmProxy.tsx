@@ -1,10 +1,10 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { CenterBox } from "@/components/ui/CenterBox";
 
 const MitmProxy = () => {
   return (
-    <Box bg="yellow.100" p={4} borderRadius="md" h="100%">
-      <Heading size="lg">MitmProxy</Heading>
-    </Box>
+    <CenterBox>
+      <span className="text-2xl font-bold text-white">MitmProxy</span>
+    </CenterBox>
   );
 };
 

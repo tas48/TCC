@@ -1,15 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignFormData, signSchema } from "../validations/signSchema";
-import { Box, Button, Input, Heading, VStack, Link } from "@chakra-ui/react";
-import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
-import { Image } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext"; 
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const Signup = () => {
   const { register: registerUser } = useAuth();
-  const { register, handleSubmit, formState: { errors } } = useForm<SignFormData>({
+  const form = useForm<SignFormData>({
     resolver: zodResolver(signSchema),
   });
 
@@ -26,53 +27,107 @@ const Signup = () => {
   };
 
   return (
-    <Box 
-      color="white"
-      minH="100vh"
-      minWidth="40vw"
-      display="flex" 
-      justifyContent="center" 
-      alignItems="center"
-    >
-      <VStack as="form" gap={4} onSubmit={handleSubmit(onSubmit)} w="sm">
-        <Image src="../public/logo.png" alt="Logo" width="100" height="auto" mb={10} objectFit="contain" />
-        <Heading size="lg" textAlign="center">Cadastro</Heading>
-
-        {/* Campo Nome de Usuário */}
-        <FormControl isInvalid={!!errors.username} width="100%">
-          <Input placeholder="Nome de Usuário" {...register("username")} bg="gray.700" color="white" borderRadius="lg" />
-          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.username?.message}</FormErrorMessage>
-        </FormControl>
-
-        {/* Campo E-mail */}
-        <FormControl isInvalid={!!errors.email} width="100%"> 
-          <Input placeholder="E-mail" {...register("email")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.email?.message}</FormErrorMessage>
-        </FormControl>
-
-        {/* Campo Senha */}
-        <FormControl isInvalid={!!errors.password} width="100%">
-          <Input type="password" placeholder="Senha" {...register("password")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.password?.message}</FormErrorMessage>
-        </FormControl>
-
-        {/* Campo Confirmar Senha */}
-        <FormControl isInvalid={!!errors.confirmPassword} width="100%">
-          <Input type="password" placeholder="Confirmar Senha" {...register("confirmPassword")} bg="gray.700" color="white" borderRadius="lg"/>
-          <FormErrorMessage color={"crimson"} fontSize="12.5px">{errors.confirmPassword?.message}</FormErrorMessage>
-        </FormControl>
-
-        <Button type="submit" bg="whiteAlpha.800" width="60%">
-          Cadastrar
-        </Button>
-        <Link color="gray.400" 
-              onClick={() => navigate("/login")} 
-              cursor="pointer" 
-              _hover={{ color: "gray.300" }}>
-          Já tem uma conta? Faça login
-        </Link>
-      </VStack>
-    </Box>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <Card className="w-[400px] bg-gray-800 border-gray-700">
+        <CardHeader className="space-y-1">
+          <div className="flex justify-center mb-4">
+            <img src="/logo.png" alt="Logo" className="w-24 h-auto" />
+          </div>
+          <CardTitle className="text-2xl text-center text-white">Cadastro</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Nome de Usuário</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Digite seu nome de usuário"
+                        className="bg-gray-700 text-white border-gray-600"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">E-mail</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Digite seu e-mail"
+                        className="bg-gray-700 text-white border-gray-600"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Digite sua senha"
+                        className="bg-gray-700 text-white border-gray-600"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Confirmar Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Confirme sua senha"
+                        className="bg-gray-700 text-white border-gray-600"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                className="w-full bg-white/80 hover:bg-white/90 text-gray-900"
+              >
+                Cadastrar
+              </Button>
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => navigate("/login")}
+                  className="text-gray-400 hover:text-gray-300 text-sm"
+                >
+                  Já tem uma conta? Faça login
+                </button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

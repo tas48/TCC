@@ -1,76 +1,86 @@
-import { Box, Text, VStack, Image, HStack } from "@chakra-ui/react";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { FaRegClock } from "react-icons/fa";
 import { GrConfigure } from "react-icons/gr";
 import { GrDocumentConfig } from "react-icons/gr";
 import { MdOutlineCreate } from "react-icons/md";
 import { FiTerminal } from "react-icons/fi";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 interface SidebarProps {
   onSelectContent: (content: string) => void;
 }
 
 const sidebarItems = [
-  { icon: <HiOutlineDocumentReport />, label: "Relatórios" },
-  { icon: <FaRegClock />, label: "Agendamento" },
-  { icon: <GrDocumentConfig />, label: "PreMande Scans" },
-  { icon: <GrConfigure />, label: "Nmap" },
-  { icon: <GrConfigure />, label: "SqlMap" },
-  { icon: <GrConfigure />, label: "MitmProxy" },
-  { icon: <GrConfigure />, label: "Dalfox" },
-  { icon: <GrConfigure />, label: "Metasploit"},
-  { icon: <MdOutlineCreate />, label: "Scan Personalizado" },
-  { icon: <FiTerminal />, label: "Terminal"}
+  { icon: <HiOutlineDocumentReport className="h-5 w-5" />, label: "Relatórios" },
+  { icon: <FaRegClock className="h-5 w-5" />, label: "Agendamento" },
+  { icon: <GrDocumentConfig className="h-5 w-5" />, label: "PreMande Scans" },
+  { icon: <GrConfigure className="h-5 w-5" />, label: "Nmap" },
+  { icon: <GrConfigure className="h-5 w-5" />, label: "SqlMap" },
+  { icon: <GrConfigure className="h-5 w-5" />, label: "MitmProxy" },
+  { icon: <GrConfigure className="h-5 w-5" />, label: "Dalfox" },
+  { icon: <GrConfigure className="h-5 w-5" />, label: "Metasploit"},
+  { icon: <MdOutlineCreate className="h-5 w-5" />, label: "Scan Personalizado" },
+  { icon: <FiTerminal className="h-5 w-5" />, label: "Terminal"}
 ];
 
 const MainSidebar = ({ onSelectContent }: SidebarProps) => {
-  return (
-    <Box
-      w="250px"
-      h="100vh"
-      bg="gray.800"
-      color="white"
-      p={4}
-      position="fixed"
-      left={0}
-      top={0}
-    >
-      <Image
-        src="../public/logo.png"
-        alt=" Logo"
-        width="18"
-        height="8"
-        marginStart={3}
-        mb={8}
-        align={"center"}
-        objectFit="contain"
-      />
+  const [isDark, setIsDark] = useState(true);
 
-      <VStack align="start" mt={1} w="100%">
+  useEffect(() => {
+    // Verifica o tema inicial
+    setIsDark(!document.documentElement.classList.contains("light"));
+
+    // Adiciona listener para mudanças no tema
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(!document.documentElement.classList.contains("light"));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="w-[250px] h-screen bg-[var(--card)] text-sidebar-foreground p-4 fixed left-0 top-0">
+      <div className="flex justify-center mb-8">
+        <img
+          src={isDark ? "/logo.png" : "/logoLight.png"}
+          alt="Logo"
+          className="w-38 h-12 object-contain"
+        />
+      </div>
+
+      <div className="flex flex-col space-y-1 w-full">
         {sidebarItems.map((item, idx) => (
-          <HStack
+          <div
             key={idx}
-            w="100%"
-            px={3}
-            py={2}
-            borderRadius="md"
-            transition="all 0.2s"
-            cursor="pointer"
+            role="button"
+            tabIndex={0}
+            className={cn(
+              "w-full flex items-center px-3 py-2 text-sidebar-foreground hover:text-sidebar-primary",
+              "transition-all duration-200 cursor-pointer",
+            )}
             onClick={() => onSelectContent(item.label)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                onSelectContent(item.label);
+              }
+            }}
           >
-            {item.icon}
-            <Text
-              transition="all 0.2s"
-              _hover={{
-                color: "gray.300",
-              }}
-            >
-              {item.label}
-            </Text>
-          </HStack>
+            <span className="mr-2">{item.icon}</span>
+            {item.label}
+          </div>
         ))}
-      </VStack>
-    </Box>
+      </div>
+    </div>
   );
 };
 

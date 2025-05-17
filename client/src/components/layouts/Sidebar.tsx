@@ -6,6 +6,10 @@ import { GrDocumentConfig } from "react-icons/gr";
 import { MdOutlineCreate } from "react-icons/md";
 import { FiTerminal } from "react-icons/fi";
 
+interface SidebarProps {
+  onSelectContent: (content: string) => void;
+}
+
 const sidebarItems = [
   { icon: <HiOutlineDocumentReport />, label: "Relatórios" },
   { icon: <FaRegClock />, label: "Agendamento" },
@@ -19,7 +23,7 @@ const sidebarItems = [
   { icon: <FiTerminal />, label: "Terminal"}
 ];
 
-const MainSidebar = () => {
+const MainSidebar = ({ onSelectContent }: SidebarProps) => {
   return (
     <Box
       w="250px"
@@ -52,6 +56,7 @@ const MainSidebar = () => {
             borderRadius="md"
             transition="all 0.2s"
             cursor="pointer"
+            onClick={() => onSelectContent(item.label)}
           >
             {item.icon}
             <Text

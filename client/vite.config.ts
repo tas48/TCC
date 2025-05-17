@@ -8,5 +8,13 @@ export default defineConfig({
   plugins: [
     react(), 
     tsconfigPaths(),
-    tailwindcss()],
+    tailwindcss()
+  ],
+  publicDir: 'public',
+  assetsInclude: ['**/*.pdf'],
+  server: {
+    fs: {
+      strict: false
+    }
+  }
 })

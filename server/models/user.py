@@ -8,4 +8,5 @@ class User(Base):
     name = Column(String, index=True, nullable=False)
     email = Column(String, unique=True, index=True)
     password = Column(String)
+    refresh_token = Column(String, nullable=True)
     

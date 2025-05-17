@@ -28,7 +28,7 @@ const Signup = () => {
   return (
     <Box 
       color="white"
-      minH="50vh"
+      minH="100vh"
       minWidth="40vw"
       display="flex" 
       justifyContent="center" 

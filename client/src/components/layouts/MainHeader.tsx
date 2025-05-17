@@ -1,6 +1,5 @@
 import { Box, HStack, IconButton, Avatar } from "@chakra-ui/react";
 import { FiBell, FiMoon, FiSettings } from "react-icons/fi";
-
 const MainHeader = () => {
   return (
     <Box
@@ -31,10 +30,12 @@ const MainHeader = () => {
           <FiSettings color="#EEEEEE"/>
         </IconButton>
 
-        <Avatar.Root>
-          <Avatar.Fallback name="Teste Jr." />
-        </Avatar.Root>
-        
+        <IconButton>
+          <Avatar.Root>
+            <Avatar.Fallback name="Jeste Jr." />
+          </Avatar.Root>
+        </IconButton>
+      
       </HStack>
     </Box>
   );

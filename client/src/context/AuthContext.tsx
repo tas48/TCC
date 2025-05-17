@@ -1,20 +1,15 @@
-const urlRegister = "http://127.0.0.1:8000/auth/register";
-const urlLogin = "http://127.0.0.1:8000/auth/login";
-
 import { createContext, useState, useContext, ReactNode } from "react";
-import axios from "axios";
-import { removeToken, saveToken } from "./utils/localStorage";
+import api from '../utils/api';
 
 interface User {
   email: string;
-  token: string;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
   register: (username: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,10 +19,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      //implementar verificação de token depois
-      const response = await axios.post(urlLogin, { email, password });
-      saveToken(response.data.token);
-      setUser({ email, token: response.data.token });
+      const response = await api.post('/auth/login', { email, password });
+      setUser({ email });
       return true;
     } catch (error: any) {
       alert(error.response?.data.detail || "Erro ao fazer login");
@@ -37,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (username: string, email: string, password: string) => {
     try {
-      await axios.post(urlRegister, { username, email, password });
+      await api.post('/auth/register', { username, email, password });
       await login(email, password);
       alert("Cadastro realizado! Logado automaticamente.");
     } catch (error: any) {  
@@ -45,9 +38,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    removeToken();
+  const logout = async () => {
+    try {
+      await api.post('/auth/logout');
+      setUser(null);
+    } catch (error: any) {
+      console.error("Erro ao fazer logout:", error);
+      setUser(null);
+    }
   };
 
   return (

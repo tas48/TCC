@@ -15,30 +15,29 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-
   const onSubmit = async (data: AuthFormData) => {
     try {
       const success = await login(data.email, data.password);
       if (success) {
         navigate("/dashboard");
       }
-    } catch (error) {
-      alert("Erro ao fazer login");
+    } catch (error: any) {
+      console.error("Erro no login:", error);
+      alert(error.response?.data?.detail || "Erro ao fazer login");
     }
-    
   };
 
   return (
     <Box 
       color="white"
-      minH="50vh"
+      minH="100vh"
       minWidth="40vw"
       display="flex" 
       justifyContent="center" 
       alignItems="center"
     >
       <VStack as="form" gap={4} onSubmit={handleSubmit(onSubmit)} w="sm">
-        <Image src="../public/logo.png" alt="Logo" width="100" height="auto" mb={10} objectFit="contain" />
+        <Image src="/logo.png" alt="Logo" width="100" height="auto" mb={10} objectFit="contain" />
         <Heading size="lg" textAlign="center">Login</Heading>
 
         <FormControl isInvalid={!!errors.email} width="100%"> 

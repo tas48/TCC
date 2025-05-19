@@ -3,6 +3,7 @@ import api from '../utils/api';
 
 interface User {
   email: string;
+  id: number;
 }
 
 interface AuthContextType {
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       const response = await api.post('/auth/login', { email, password });
-      setUser({ email });
+      setUser({ email, id: response.data.user_id });
       return true;
     } catch (error: any) {
       alert(error.response?.data.detail || "Erro ao fazer login");

@@ -54,7 +54,7 @@ const MainSidebar = ({ onSelectContent }: SidebarProps) => {
         <img
           src={isDark ? "/logo.png" : "/logoLight.png"}
           alt="Logo"
-          className="w-38 h-12 object-contain"
+          className="w-32 h-12 object-contain justify-start"
         />
       </div>
 

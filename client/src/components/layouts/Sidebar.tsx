@@ -50,11 +50,11 @@ const MainSidebar = ({ onSelectContent }: SidebarProps) => {
 
   return (
     <div className="w-[250px] h-screen bg-[var(--card)] text-sidebar-foreground p-4 fixed left-0 top-0">
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-start mb-8 ml-4">
         <img
           src={isDark ? "/logo.png" : "/logoLight.png"}
           alt="Logo"
-          className="w-32 h-12 object-contain justify-start"
+          className="w-32 h-12 object-contain"
         />
       </div>
 

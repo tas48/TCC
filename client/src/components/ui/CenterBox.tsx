@@ -9,7 +9,7 @@ export function CenterBox({ children, className, ...props }: CenterBoxProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center min-h-screen bg-chart-5",
+        "w-full h-full bg-[var(--card)] border-border rounded-lg shadow-sm p-4"  ,
         className
       )}
       {...props}

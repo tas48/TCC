@@ -3,6 +3,13 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
 import { cn } from "@/lib/utils"
 
+const getInitials = (name: string) => {
+  if (!name) return "";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
 function Avatar({
   className,
   ...props
@@ -34,17 +41,20 @@ function AvatarImage({
 
 function AvatarFallback({
   className,
+  name,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: React.ComponentProps<typeof AvatarPrimitive.Fallback> & { name?: string }) {
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
+        "bg-muted flex size-full items-center justify-center rounded-full text-sm font-medium text-muted-foreground",
         className
       )}
       {...props}
-    />
+    >
+      {name ? getInitials(name) : null}
+    </AvatarPrimitive.Fallback>
   )
 }
 

@@ -11,5 +11,4 @@ class Relatorio(Base):
     descricao = Column(Text)
     data_criacao = Column(TIMESTAMP)
     caminho_arquivo = Column(String(255))
-
     usuario = relationship("Usuario", back_populates="relatorios") 

@@ -50,12 +50,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="h-[100dvh] w-[100vw] overflow-hidden">
+    <div className="h-[100dvh] w-[100vw] overflow-hidden relative">
       <MainHeader onSelectContent={setSelectedContent} />
       <MainSidebar onSelectContent={setSelectedContent} />
-      <CenterBox className="p-6">
+      <div className="absolute top-[8%] left-[250px] right-15 bottom-15">
         {renderContent()}
-      </CenterBox>
+      </div>
     </div>
   );
 };

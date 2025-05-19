@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FiSettings } from "react-icons/fi";
 import { NotificationPopover } from "./Notifications";
 import ThemeSwitch from "@/components/ui/ThemeSwitch";
@@ -20,18 +20,14 @@ const MainHeader = ({ onSelectContent }: MainHeaderProps) => {
     if (user?.id) {
       api.get(`/auth/users/${user.id}`).then((res) => {
         setUserData(res.data);
+      }).catch(error => {
+        console.error("Error fetching user data:", error);
       });
     }
   }, [user?.id]);
 
-  const avatarUrl = userData?.imagem;
+  const avatarUrl = userData?.imagem || "/default-avatar.png";
   const nome = userData?.nome_completo || userData?.email || "";
-  const getInitials = (name: string) => {
-    if (!name) return "";
-    const parts = name.trim().split(" ");
-    if (parts.length === 1) return parts[0][0].toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-  };
 
   return (
     <div className="w-full h-[8%] bg-[var(--card)] text-foreground p-4 fixed top-0 left-0 flex items-center justify-end">
@@ -54,18 +50,9 @@ const MainHeader = ({ onSelectContent }: MainHeaderProps) => {
           onClick={() => onSelectContent("Profile")}
           className="cursor-pointer focus:outline-none focus:ring-0"
         >
-          <Avatar className="h-8 w-8">
-            {avatarUrl ? (
-              <img
-                src={avatarUrl}
-                alt="Avatar"
-                className="h-full w-full object-cover rounded-full"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
-                {getInitials(nome)}
-              </div>
-            )}
+          <Avatar>
+            <AvatarImage src={avatarUrl} alt="Avatar" />
+            <AvatarFallback name={nome} />
           </Avatar>
         </Button>
         <LogoutButton />

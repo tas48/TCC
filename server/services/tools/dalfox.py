@@ -1,5 +1,5 @@
 # dalfox_service.py
-from services.api import run_in_docker_dalfox
+from services.tools.api import run_in_docker_dalfox
 from services.utils.json_format import format_response, is_valid_target
 
 class Dalfox:

@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { GoogleLogin } from '@react-oauth/google';
+import { useState, useEffect } from "react";
+import api from '../context/utils/api';
+import ThemeSwitch from "@/components/ui/ThemeSwitch";
 
 const Login = () => {
   const form = useForm<AuthFormData>({
@@ -15,6 +19,26 @@ const Login = () => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    setIsDark(!document.documentElement.classList.contains("light"));
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(!document.documentElement.classList.contains("light"));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const onSubmit = async (data: AuthFormData) => {
     try {
@@ -28,14 +52,43 @@ const Login = () => {
     }
   };
 
+  const GoogleLoginButton = () => {
+    const handleGoogleLogin = async (credentialResponse: any) => {
+      try {
+        await api.post('/auth/google/register', {
+          credential: credentialResponse.credential,
+        }, { withCredentials: true });
+        navigate('/dashboard');
+      } catch (err) {
+        alert('Erro ao logar com Google');
+      }
+    };
+    return (
+      <div className="flex justify-center mt-2">
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          onError={() => alert('Erro ao logar com Google')}
+          useOneTap
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="absolute top-4 right-4">
+        <ThemeSwitch />
+      </div>
       <Card className="w-[400px] border-none shadow-none">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
-            <img src="/logo.png" alt="Logo" className="w-48 h-auto" />
+            <img 
+              src={isDark ? "/logo.png" : "/logoLight.png"} 
+              alt="Logo" 
+              className="w-68 h-auto" 
+            />
           </div>
-
+          <GoogleLoginButton />
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -89,6 +142,7 @@ const Login = () => {
                   Não tem conta? Cadastre-se
                 </a>
               </div>
+
             </form>
           </Form>
         </CardContent>

@@ -1,28 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { FiMoon, FiSettings } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
 import { NotificationPopover } from "./Notifications";
+import ThemeSwitch from "@/components/ui/ThemeSwitch";
 
 interface MainHeaderProps {
   onSelectContent: (content: string) => void;
 }
 
 const MainHeader = ({ onSelectContent }: MainHeaderProps) => {
-  const toggleTheme = () => {
-    setTimeout(() => {
-      document.documentElement.classList.toggle("light");
-    }, 100);
-  };
-
   return (
     <div className="w-full h-[8%] bg-[var(--card)] text-foreground p-4 fixed top-0 left-0 flex items-center justify-end">
       <div className="flex items-center space-x-1">
-        <Button variant="ghost" size="icon" aria-label="Tema" onClick={toggleTheme} className="focus:outline-none focus:ring-0">
-          <FiMoon className="h-5 w-5 text-muted-foreground" />
-        </Button>
-
+        <ThemeSwitch />
         <NotificationPopover />
-
         <Button 
           variant="ghost" 
           size="icon" 

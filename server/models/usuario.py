@@ -15,6 +15,7 @@ class Usuario(Base):
     tipo_usuario = Column(Enum("admin", "comum", name="tipo_usuario_enum"))
     data_criacao = Column(TIMESTAMP)
     imagem = Column(String(255))
+    refresh_token = Column(String(255))
 
     empresas = relationship("Empresa", back_populates="usuario")
     relatorios = relationship("Relatorio", back_populates="usuario")

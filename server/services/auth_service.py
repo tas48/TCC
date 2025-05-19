@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.user import User
+from models.usuario import Usuario
 from pydantic import BaseModel
 from schemas.user import UserCreate, UserLogin
 from fastapi import HTTPException, Response
@@ -13,12 +13,20 @@ import secrets
 load_dotenv()
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
+def create_access_token(email: str) -> str:
+    return create_token(email)
+
 def register_user(user: UserCreate, db: Session, response: Response):
-    if db.query(User).filter(User.email == user.email).first():
+    if db.query(Usuario).filter(Usuario.email == user.email).first():
         raise HTTPException(status_code=400, detail="Email já cadastrado")
 
     hashed_password = hash_password(user.password)
-    new_user = User(name=user.username, email=user.email, password=hashed_password)
+    new_user = Usuario(
+        nome_completo=user.username,
+        email=user.email,
+        senha=hashed_password,
+        tipo_usuario='comum'
+    )
     db.add(new_user)
     db.commit()
 
@@ -54,8 +62,8 @@ def register_user(user: UserCreate, db: Session, response: Response):
     return {"message": "Usuário cadastrado com sucesso"}
 
 def login_user(user: UserLogin, db: Session, response: Response):
-    db_user = db.query(User).filter(User.email == user.email).first()
-    if not db_user or not verify_password(user.password, db_user.password):
+    db_user = db.query(Usuario).filter(Usuario.email == user.email).first()
+    if not db_user or not verify_password(user.password, db_user.senha):
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
     # Gerar tokens
@@ -97,7 +105,7 @@ def refresh_access_token(refresh_token: str, db: Session, response: Response):
             raise HTTPException(status_code=401, detail="Refresh token inválido")
 
         # Verificar se o refresh token está no banco
-        user = db.query(User).filter(User.email == email, User.refresh_token == refresh_token).first()
+        user = db.query(Usuario).filter(Usuario.email == email, Usuario.refresh_token == refresh_token).first()
         if not user:
             raise HTTPException(status_code=401, detail="Refresh token inválido")
 
@@ -122,7 +130,7 @@ def refresh_access_token(refresh_token: str, db: Session, response: Response):
 
 def logout_user(response: Response, db: Session, email: str):
     # Limpar refresh token do banco
-    user = db.query(User).filter(User.email == email).first()
+    user = db.query(Usuario).filter(Usuario.email == email).first()
     if user:
         user.refresh_token = None
         db.commit()

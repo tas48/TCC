@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database.database import get_db
 from schemas.target_request import TargetRequest
-from services.dalfox import Dalfox
+from services.tools.dalfox import Dalfox
 
 router = APIRouter()
 

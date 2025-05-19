@@ -23,7 +23,7 @@ def google_authenticate(token: str, db: Session):
     if not usuario:
         usuario = Usuario(
             email=email,
-            senha='',  # Usuário Google não tem senha
+            senha='', 
             nome_completo=nome,
             imagem=imagem,
             tipo_usuario='comum'

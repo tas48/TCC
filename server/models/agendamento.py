@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Enum, TIMESTAMP, DATETIME, ForeignKey, SmallInteger
+from sqlalchemy import Column, Integer, String, Text, Enum, TIMESTAMP, DateTime, ForeignKey, SmallInteger
 from sqlalchemy.orm import relationship
 from database.conn import Base
 
@@ -11,7 +11,7 @@ class Agendamento(Base):
     descricao = Column(Text)
     periodicidade = Column(Enum("diario", "semanal", "mensal", name="periodicidade_enum"))
     intervalo_personalizado = Column(Integer)
-    data_inicio = Column(DATETIME)
+    data_inicio = Column(DateTime)
     ativo = Column(SmallInteger)
     data_criacao = Column(TIMESTAMP)
 
